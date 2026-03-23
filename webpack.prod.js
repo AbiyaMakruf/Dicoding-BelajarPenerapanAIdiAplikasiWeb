@@ -23,6 +23,9 @@ module.exports = merge(common, {
     new WorkboxWebpackPlugin.GenerateSW({
       swDest: "sw.js",
       maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+      clientsClaim: true,
+      skipWaiting: true,
+      cleanupOutdatedCaches: true,
       runtimeCaching: [
         {
           urlPattern: /^https:\/\/api\./i,
@@ -33,6 +36,30 @@ module.exports = merge(common, {
               maxEntries: 50,
               maxAgeSeconds: 60 * 60 * 24,
             },
+            cacheableResponse: {
+              statuses: [0, 200],
+            },
+          },
+        },
+        {
+          urlPattern: /^https:\/\/(?:huggingface\.co|cdn-lfs\.huggingface\.co)\//i,
+          handler: "CacheFirst",
+          options: {
+            cacheName: "hf-model-cache",
+            expiration: {
+              maxEntries: 30,
+              maxAgeSeconds: 60 * 60 * 24 * 7,
+            },
+            cacheableResponse: {
+              statuses: [0, 200],
+            },
+          },
+        },
+        {
+          urlPattern: /^https:\/\/(?:fonts\.googleapis\.com|fonts\.gstatic\.com|unpkg\.com)\//i,
+          handler: "StaleWhileRevalidate",
+          options: {
+            cacheName: "asset-cdn-cache",
             cacheableResponse: {
               statuses: [0, 200],
             },

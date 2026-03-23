@@ -24,21 +24,20 @@ export function generateCameraSection() {
           <div class="setting-item">
             <i data-lucide="camera" width="16" height="16"></i>
             <select id="camera-select">
-              <option value="default">Belakang</option>
-              <option value="front">Depan</option>
+              <option value="environment">Kamera belakang</option>
             </select>
           </div>
           <div class="setting-item fps-setting">
-            <span id="fps-label">30 FPS</span>
-            <input type="range" id="fps-slider" min="15" max="60" step="15" value="30">
+            <span id="fps-label">15 FPS</span>
+            <input type="range" id="fps-slider" min="5" max="30" step="5" value="15">
           </div>
           <div class="setting-item tone-setting">
-            <i data-lucide="mic" width="16" height="16"></i>
+            <i data-lucide="sparkles" width="16" height="16"></i>
             <select id="tone-select">
-              <option value="normal" selected>Normal</option>
+              <option value="normal" selected>Natural</option>
               <option value="funny">Lucu</option>
-              <option value="professional">Profesional</option>
-              <option value="casual">Santai</option>
+              <option value="history">Sejarah</option>
+              <option value="chef">Chef</option>
             </select>
           </div>
         </div>
@@ -64,7 +63,7 @@ function generateIdleState() {
         <i data-lucide="sparkles" width="40" height="40"></i>
       </div>
       <h2>Scan Sayuran</h2>
-      <p>Ketuk tombol di bawah untuk memulai dan temukan fakta menarik tentang sayuran!</p>
+      <p>Model AI sedang dipersiapkan. Setelah siap, aktifkan kamera dan arahkan sayuran ke dalam frame.</p>
     </div>
   `;
 }
@@ -78,8 +77,14 @@ function generateLoadingState() {
           <i data-lucide="search" width="24" height="24"></i>
         </div>
       </div>
-      <h2>Mencari...</h2>
-      <p>Sedang mengidentifikasi sayuran Anda</p>
+      <h2 id="loading-title">Menunggu Model...</h2>
+      <p id="loading-description">Sedang menyiapkan sistem deteksi</p>
+      <div class="progress-block">
+        <div class="progress-track">
+          <div id="loading-progress-bar" class="progress-fill" style="width: 0%"></div>
+        </div>
+        <span id="loading-progress-text" class="progress-text">0%</span>
+      </div>
     </div>
   `;
 }
@@ -87,9 +92,17 @@ function generateLoadingState() {
 function generateResultState() {
   return `
     <div id="state-result" class="result-card result-main hidden">
-      <div class="detected-badge">
-        <i data-lucide="check-circle" width="14" height="14"></i>
-        <span id="detected-name">Sayuran</span>
+      <div class="result-meta">
+        <div class="detected-badge">
+          <i data-lucide="check-circle" width="14" height="14"></i>
+          <span id="detected-name">Sayuran</span>
+        </div>
+        <div id="backend-badge" class="backend-badge">Backend: -</div>
+      </div>
+
+      <div class="fact-style-pill">
+        <i data-lucide="pen-square" width="14" height="14"></i>
+        <span id="tone-label">Natural</span>
       </div>
 
       <div class="fun-fact-card">
@@ -98,7 +111,7 @@ function generateResultState() {
         </div>
         <div id="fun-fact-loading" class="fun-fact-loading hidden">
           <div class="fun-fact-loading-spinner"></div>
-          <span>Memuat fakta menarik...</span>
+          <span id="fun-fact-loading-text">Memuat fakta menarik...</span>
         </div>
         <div id="fun-fact-content">
           <p id="fun-fact-text" class="fun-fact-text">Fakta menarik akan muncul di sini...</p>
@@ -118,7 +131,7 @@ function generateResultState() {
 
       <div class="share-hint">
         <i data-lucide="share-2" width="14" height="14"></i>
-        <span>Salin dan bagikan ke teman!</span>
+        <span id="result-hint">Salin dan bagikan ke teman!</span>
       </div>
     </div>
   `;
@@ -129,5 +142,23 @@ export function generateFooter() {
     <footer class="footer">
       <p>Powered by TensorFlow.js & Transformers.js</p>
     </footer>
+  `;
+}
+
+export function generateInstallBanner() {
+  return `
+    <div id="install-banner" class="install-banner hidden">
+      <div>
+        <strong>Pasang RootFacts</strong>
+        <p>Buka aplikasi lebih cepat dan tetap siap dipakai saat offline.</p>
+      </div>
+      <button id="btn-install" class="install-btn" type="button">Install</button>
+    </div>
+  `;
+}
+
+export function generateToast() {
+  return `
+    <div id="app-toast" class="app-toast hidden" role="status" aria-live="polite"></div>
   `;
 }
