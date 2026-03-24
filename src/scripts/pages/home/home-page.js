@@ -91,12 +91,12 @@ export default class HomePage {
     }
   }
 
-  showModelReady(detectionBackend, factsBackend) {
-    this.hideCameraLoading();
-    this.showStatus(
-      `Model siap`,
-    );
-  }
+  // showModelReady(detectionBackend, factsBackend) {
+  //   this.hideCameraLoading();
+  //   this.showStatus(
+  //     `Model siap`,
+  //   );
+  // }
 
   showCameraLoading() {
     const toggleButton = document.getElementById("btn-toggle");

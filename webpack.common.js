@@ -53,6 +53,10 @@ module.exports = {
           to: ".",
         },
         {
+          from: path.resolve(__dirname, "src/public/sw.js"),
+          to: ".",
+        },
+        {
           from: path.resolve(__dirname, "src/public/icons"),
           to: "icons",
         },
