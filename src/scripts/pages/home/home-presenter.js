@@ -32,10 +32,10 @@ export default class HomePresenter {
       await this.#cameraService.loadCameras(this.#view.getCameraSelectElement());
       const detectionInfo = await this.#detectionService.loadModel();
       this.#view.showLoadingState(
-        "Memuat model fakta AI untuk menghasilkan fun fact...",
+        "Memuat model AI untuk menghasilkan fun fact...",
         "Menyiapkan Fun Fact...",
       );
-      this.#view.showStatus("Memuat model fakta AI...");
+      this.#view.showStatus("Memuat model AI...");
       const factsInfo = await this.#rootFactsService.loadModel();
 
       this.#view.showModelReady(detectionInfo.backend, factsInfo.backend);
@@ -61,8 +61,7 @@ export default class HomePresenter {
       this.#view.hideCameraLoading();
       this.#view.showCameraActive();
       this.#view.showLoadingState(
-        "Arahkan kamera ke sayuran hingga sistem menemukan label yang paling yakin.",
-        "Mencari Sayuran...",
+        "Mencari Sayuran..."
       );
       this.#view.showStatus("Kamera aktif. Memulai deteksi...");
 
@@ -227,7 +226,7 @@ export default class HomePresenter {
       const result = await this.#rootFactsService.generateFacts(className, tone);
       this.#view.showFactSuccess(result.fact);
       this.#view.showStatus(
-        `Fakta ${this.#view.getToneLabel(result.tone)} siap (${result.backend.toUpperCase()})`,
+        `Siap`,
       );
     } catch (error) {
       logError("Generasi fakta gagal", error);

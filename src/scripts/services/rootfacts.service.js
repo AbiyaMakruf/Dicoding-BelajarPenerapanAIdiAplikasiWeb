@@ -21,7 +21,7 @@ class RootFactsService {
         ? "webgpu"
         : this.config.fallbackDevice;
 
-      this.#emitProgress(`Memuat model fakta AI (${device.toUpperCase()})...`);
+      this.#emitProgress(`Memuat model AI (${device.toUpperCase()})...`);
 
       this.generator = await pipeline(
         "text2text-generation",
@@ -36,7 +36,7 @@ class RootFactsService {
 
       this.isModelLoaded = true;
       this.currentBackend = device;
-      this.#emitProgress(`Model fakta siap (${device.toUpperCase()})`);
+      this.#emitProgress(`Model siap`);
 
       return {
         success: true,
@@ -46,7 +46,7 @@ class RootFactsService {
     } catch (error) {
       this.isModelLoaded = false;
       logError("Gagal memuat model RootFacts", error);
-      throw new Error(`Gagal memuat model fakta: ${error.message}`);
+      throw new Error(`Gagal memuat model: ${error.message}`);
     }
   }
 
@@ -62,7 +62,7 @@ class RootFactsService {
   // TODO [Advance] Implemenasikan parameter tone untuk mengatur nada fakta yang dihasilkan
   async generateFacts(vegetable, tone = "normal") {
     if (!this.isReady()) {
-      throw new Error("Model fakta belum siap.");
+      throw new Error("Model belum siap.");
     }
 
     const safeVegetable = this.#sanitizeVegetableInput(vegetable);

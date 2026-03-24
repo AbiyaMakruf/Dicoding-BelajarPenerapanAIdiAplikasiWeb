@@ -94,7 +94,7 @@ export default class HomePage {
   showModelReady(detectionBackend, factsBackend) {
     this.hideCameraLoading();
     this.showStatus(
-      `Model siap (${detectionBackend.toUpperCase()} / ${factsBackend.toUpperCase()})`,
+      `Model siap`,
     );
   }
 

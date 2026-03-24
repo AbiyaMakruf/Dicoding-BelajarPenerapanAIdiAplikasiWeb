@@ -54,7 +54,7 @@ class DetectionService {
 
       this.model = model;
       this.labels = metadata.labels;
-      this.#emitProgress(100, `Model siap (${backend.toUpperCase()})`);
+      this.#emitProgress(100, `Model siap`);
 
       return {
         success: true,
