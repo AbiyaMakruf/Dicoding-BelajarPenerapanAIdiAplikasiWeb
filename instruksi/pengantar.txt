@@ -1,0 +1,32 @@
+Selamat! Akhirnya Anda telah sampai di penghujung pembelajaran. Seluruh bekal kemampuan untuk membangun aplikasi yang interaktif sudah Anda kuasai. Kami sangat mengapresiasi usaha dan dedikasi yang telah dilakukan.
+
+Dalam perjalanan belajar, Anda telah mempelajari berbagai hal terkait penerapan AI di aplikasi web, di antaranya.
+
+Mengetahui contoh dan kegunaan AI pada platform browser.
+Mengenal konsep, mekanisme kerja, dan jenis-jenis Computer Vision untuk platform browser.
+Memberikan nilai tambah pada aplikasi menggunakan Generative AI .
+Membangun aplikasi yang memanfaatkan kemampuan hardware pengguna untuk memproses AI secara lokal.
+Dengan menyelesaikan submission ini, Anda akan mampu:
+
+Mengintegrasikan model dengan TensorFlow.js untuk membangun sebuah aplikasi yang dapat mengenali objek yang sudah dilatih.
+Mengintegrasikan model open source dengan bantuan Transformers.js untuk menambahkan kemampuan Generative AI pada aplikasi.
+Mengintegrasikan model Computer Vision dan Generative AI untuk menambah nilai pada suatu aplikasi.
+Kini, saatnya membuktikan kemampuan tersebut dengan membangun Root Fact App.
+
+Apa itu Root Fact App?
+Root Fact App adalah aplikasi asisten berbasis web yang dirancang untuk menambah nilai interaktivitas pada pengalaman pengguna melalui kemampuan mengenali jenis sayuran dan menyajikan informasi unik secara otomatis. Aplikasi ini menggabungkan dua fungsionalitas utama.
+
+Si Mata (Computer Vision): Menggunakan kamera untuk mengenali berbagai jenis sayuran.
+Si Otak (Generative AI): Setelah sayuran dikenali, ia akan menceritakan fakta menarik (fun fact) yang unik tentang sayuran tersebut.
+Mengenal Model yang Digunakan
+Untuk membantu "Si Mata" bekerja, kami telah menyediakan sebuah pre-trained model khusus sayuran. Penting untuk diketahui bahwa model ini dilatih menggunakan metode yang sama dengan yang telah Anda pelajari pada modul sebelumnya. Model ini sudah memiliki kemampuan dasar untuk mengenali label sayuran seperti yang tertera pada berkas metadata.json.
+
+Apa yang Akan Anda Kerjakan?
+Misi utama Anda pada submission ini adalah menyempurnakan starter project yang telah kami sediakan agar menjadi aplikasi yang memberikan nilai tambah bagi penggunanya.
+
+Kami telah menyiapkan sebuah TODO list sebagai bantuan agar Anda tetap fokus pada sasaran utama pembelajaran. Namun, Anda tidak harus terpaku sepenuhnya pada instruksi TODO tersebut. Kami sangat mendukung Anda untuk berkreasi dan menggunakan pendekatan atau logika berbeda sesuai pemahaman Anda, selama tujuan utama integrasi AI berhasil dicapai dengan baik. Fokus pengerjaan Anda meliputi.
+
+Mengintegrasikan Model: Melengkapi logika penglihatan (TensorFlow.js) agar aplikasi mampu mengenali sayuran secara langsung melalui kamera.
+Membangun Jembatan Logika: Menghubungkan hasil deteksi sayuran ke model bahasa (Transformers.js) untuk menciptakan konten fun fact yang menarik.
+Menjamin Ketangguhan: Memastikan aplikasi tetap dapat memberikan informasi meskipun perangkat sedang tidak memiliki koneksi internet (Offline-First) melalui fitur instalasi aplikasi (PWA).
+Selamat mengerjakan. Kami tunggu karya terbaik Anda!
