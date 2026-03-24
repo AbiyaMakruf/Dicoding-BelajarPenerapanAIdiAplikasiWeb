@@ -49,6 +49,10 @@ module.exports = {
           to: ".",
         },
         {
+          from: path.resolve(__dirname, "src/public/manifest.json"),
+          to: ".",
+        },
+        {
           from: path.resolve(__dirname, "src/public/icons"),
           to: "icons",
         },

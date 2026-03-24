@@ -22,8 +22,41 @@ module.exports = merge(common, {
     }),
     new WorkboxWebpackPlugin.GenerateSW({
       swDest: "sw.js",
+      clientsClaim: true,
+      skipWaiting: true,
+      cleanupOutdatedCaches: true,
       maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+      navigateFallback: "/index.html",
+      globPatterns: ["**/*.{html,js,css,ico,png,json,bin}"],
       runtimeCaching: [
+        {
+          urlPattern: /^https:\/\/fonts\.(?:googleapis|gstatic)\.com/i,
+          handler: "CacheFirst",
+          options: {
+            cacheName: "google-fonts-cache",
+            cacheableResponse: {
+              statuses: [0, 200],
+            },
+            expiration: {
+              maxEntries: 20,
+              maxAgeSeconds: 60 * 60 * 24 * 30,
+            },
+          },
+        },
+        {
+          urlPattern: /^https:\/\/unpkg\.com/i,
+          handler: "StaleWhileRevalidate",
+          options: {
+            cacheName: "cdn-assets-cache",
+            cacheableResponse: {
+              statuses: [0, 200],
+            },
+            expiration: {
+              maxEntries: 20,
+              maxAgeSeconds: 60 * 60 * 24 * 7,
+            },
+          },
+        },
         {
           urlPattern: /^https:\/\/api\./i,
           handler: "NetworkFirst",
