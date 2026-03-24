@@ -22,6 +22,23 @@ const CAMERA_CONFIG = {
   mobileFacingMode: "environment",
 };
 
+const TRANSFORMERS_CONFIG = {
+  modelName: "Xenova/LaMini-Flan-T5-77M",
+  dtype: "q4",
+  fallbackDevice: "wasm",
+  maxInputLength: 40,
+  maxNewTokens: 110,
+  temperature: 0.7,
+  topP: 0.9,
+  doSample: true,
+  tones: {
+    normal: "Use a warm and informative tone.",
+    funny: "Use a playful, funny tone with light humor.",
+    professional: "Use a professional educational tone.",
+    casual: "Use a friendly casual tone for everyday readers.",
+  },
+};
+
 const UI_CONFIG = {
   animationDuration: 300,
   fadeAnimation: "fadeIn 0.5s ease-out forwards",
@@ -39,5 +56,6 @@ export {
   APP_CONFIG,
   TENSORFLOW_CONFIG,
   CAMERA_CONFIG,
+  TRANSFORMERS_CONFIG,
   UI_CONFIG,
 };

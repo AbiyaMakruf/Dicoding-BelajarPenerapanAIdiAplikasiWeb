@@ -62,4 +62,10 @@ module.exports = {
   stats: {
     warningsFilter: /import\.meta/,
   },
+  ignoreWarnings: [
+    {
+      module: /@huggingface[\\/]transformers/,
+      message: /import\.meta/,
+    },
+  ],
 };

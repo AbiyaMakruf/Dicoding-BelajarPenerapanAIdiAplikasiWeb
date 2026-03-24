@@ -35,6 +35,8 @@ export default class HomePage {
     const toggleButton = document.getElementById("btn-toggle");
     const fpsSlider = document.getElementById("fps-slider");
     const cameraSelect = document.getElementById("camera-select");
+    const toneSelect = document.getElementById("tone-select");
+    const copyButton = document.getElementById("btn-copy");
 
     if (toggleButton) {
       toggleButton.addEventListener("click", () => {
@@ -53,6 +55,18 @@ export default class HomePage {
     if (cameraSelect) {
       cameraSelect.addEventListener("change", async () => {
         await this.#presenter.changeCamera();
+      });
+    }
+
+    if (toneSelect) {
+      toneSelect.addEventListener("change", async (event) => {
+        await this.#presenter.setTone(event.target.value);
+      });
+    }
+
+    if (copyButton) {
+      copyButton.addEventListener("click", async () => {
+        await this.#presenter.copyFact();
       });
     }
 
@@ -77,9 +91,11 @@ export default class HomePage {
     }
   }
 
-  showModelReady(backend) {
+  showModelReady(detectionBackend, factsBackend) {
     this.hideCameraLoading();
-    this.showStatus(`Model siap (${backend.toUpperCase()})`);
+    this.showStatus(
+      `Model siap (${detectionBackend.toUpperCase()} / ${factsBackend.toUpperCase()})`,
+    );
   }
 
   showCameraLoading() {
@@ -168,6 +184,7 @@ export default class HomePage {
     const funFactText = document.getElementById("fun-fact-text");
     const funFactLoading = document.getElementById("fun-fact-loading");
     const funFactContent = document.getElementById("fun-fact-content");
+    const copyButton = document.getElementById("btn-copy");
 
     hideElement(idleState);
     hideElement(loadingState);
@@ -177,13 +194,64 @@ export default class HomePage {
     setElementText(detectedName, result.className);
     setElementText(detectedConfidence, `${result.confidence}%`);
     setElementStyle(confidenceFill, "width", `${result.confidence}%`);
-    setElementText(
-      funFactText,
-      "Fakta menarik akan diaktifkan pada kriteria berikutnya.",
-    );
+    setElementText(funFactText, "");
+    copyButton?.classList.remove("copied");
+    copyButton?.setAttribute("title", "Salin fakta");
+    copyButton?.removeAttribute("disabled");
 
     hideElement(funFactLoading);
     showElement(funFactContent);
+  }
+
+  showFactLoading(tone) {
+    const funFactText = document.getElementById("fun-fact-text");
+    const funFactLoading = document.getElementById("fun-fact-loading");
+    const funFactContent = document.getElementById("fun-fact-content");
+    const copyButton = document.getElementById("btn-copy");
+
+    setElementText(
+      funFactText,
+      `Menyiapkan fakta dengan gaya ${this.getToneLabel(tone)}...`,
+    );
+    showElement(funFactLoading);
+    showElement(funFactContent);
+    copyButton?.setAttribute("disabled", "disabled");
+    copyButton?.classList.remove("copied");
+  }
+
+  showFactSuccess(fact) {
+    const funFactText = document.getElementById("fun-fact-text");
+    const funFactLoading = document.getElementById("fun-fact-loading");
+    const copyButton = document.getElementById("btn-copy");
+
+    hideElement(funFactLoading);
+    setElementText(funFactText, fact);
+    copyButton?.removeAttribute("disabled");
+  }
+
+  showFactError(message) {
+    const funFactText = document.getElementById("fun-fact-text");
+    const funFactLoading = document.getElementById("fun-fact-loading");
+    const copyButton = document.getElementById("btn-copy");
+
+    hideElement(funFactLoading);
+    setElementText(
+      funFactText,
+      message || "Fakta tidak dapat dibuat untuk saat ini.",
+    );
+    copyButton?.setAttribute("disabled", "disabled");
+  }
+
+  showCopySuccess() {
+    const copyButton = document.getElementById("btn-copy");
+
+    copyButton?.classList.add("copied");
+    copyButton?.setAttribute("title", "Tersalin");
+
+    window.setTimeout(() => {
+      copyButton?.classList.remove("copied");
+      copyButton?.setAttribute("title", "Salin fakta");
+    }, 1200);
   }
 
   showStatus(message) {
@@ -210,5 +278,26 @@ export default class HomePage {
   getFPSValue() {
     const fpsSlider = document.getElementById("fps-slider");
     return Number(fpsSlider?.value || 30);
+  }
+
+  getSelectedTone() {
+    const toneSelect = document.getElementById("tone-select");
+    return toneSelect?.value || "normal";
+  }
+
+  getToneLabel(tone) {
+    const toneLabels = {
+      normal: "normal",
+      funny: "lucu",
+      professional: "profesional",
+      casual: "santai",
+    };
+
+    return toneLabels[tone] || toneLabels.normal;
+  }
+
+  getCurrentFact() {
+    const funFactText = document.getElementById("fun-fact-text");
+    return funFactText?.textContent?.trim() || "";
   }
 }

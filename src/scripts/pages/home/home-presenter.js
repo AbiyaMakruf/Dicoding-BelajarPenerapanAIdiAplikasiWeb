@@ -1,20 +1,27 @@
 import { APP_CONFIG } from "../../config.js";
 import CameraService from "../../services/camera.service.js";
 import DetectionService from "../../services/detection.service.js";
+import RootFactsService from "../../services/rootfacts.service.js";
 import { createDelay, isValidDetection, logError } from "../../utils/index.js";
 
 export default class HomePresenter {
   #view = null;
   #cameraService = null;
   #detectionService = null;
+  #rootFactsService = null;
   #timer = null;
   #currentLoopId = null;
+  #lastDetection = null;
+  #queuedTone = null;
 
   constructor({ view }) {
     this.#view = view;
     this.#cameraService = new CameraService();
     this.#detectionService = new DetectionService((progress) => {
       this.#view.showModelLoading(progress.progress, progress.message);
+    });
+    this.#rootFactsService = new RootFactsService((progress) => {
+      this.#view.showStatus(progress.message);
     });
   }
 
@@ -23,9 +30,15 @@ export default class HomePresenter {
 
     try {
       await this.#cameraService.loadCameras(this.#view.getCameraSelectElement());
-      const modelInfo = await this.#detectionService.loadModel();
+      const detectionInfo = await this.#detectionService.loadModel();
+      this.#view.showLoadingState(
+        "Memuat model fakta AI untuk menghasilkan fun fact...",
+        "Menyiapkan Fun Fact...",
+      );
+      this.#view.showStatus("Memuat model fakta AI...");
+      const factsInfo = await this.#rootFactsService.loadModel();
 
-      this.#view.showModelReady(modelInfo.backend);
+      this.#view.showModelReady(detectionInfo.backend, factsInfo.backend);
       this.#view.enableToggleButton();
       this.#view.showIdleState();
     } catch (error) {
@@ -94,6 +107,37 @@ export default class HomePresenter {
     }
   }
 
+  async setTone(tone) {
+    this.#rootFactsService.setTone(tone);
+
+    if (!this.#lastDetection) {
+      return;
+    }
+
+    if (this.#rootFactsService.isGenerating) {
+      this.#queuedTone = tone;
+      return;
+    }
+
+    await this.#generateFacts(this.#lastDetection.className, tone);
+  }
+
+  async copyFact() {
+    const fact = this.#view.getCurrentFact();
+    if (!fact) {
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(fact);
+      this.#view.showCopySuccess();
+      this.#view.showStatus("Fakta berhasil disalin");
+    } catch (error) {
+      logError("Salin fakta gagal", error);
+      this.#view.showStatus("Gagal menyalin fakta");
+    }
+  }
+
   #startDetectionLoop() {
     this.#stopDetectionLoop();
 
@@ -156,9 +200,11 @@ export default class HomePresenter {
         this.#cameraService.stopCamera();
         this.#view.showCameraInactive();
         this.#view.showResultState(result);
+        this.#lastDetection = result;
         this.#view.showStatus(
           `Terdeteksi: ${result.className} (${result.confidence}%)`,
         );
+        await this.#generateFacts(result.className, this.#view.getSelectedTone());
 
         return;
       }
@@ -171,5 +217,35 @@ export default class HomePresenter {
       logError("Loop deteksi gagal", error);
       this.#view.showStatus("Prediksi gagal. Sistem mencoba ulang...");
     }
+  }
+
+  async #generateFacts(className, tone) {
+    this.#view.showFactLoading(tone);
+    this.#view.showStatus(`Membuat fakta ${this.#view.getToneLabel(tone)}...`);
+
+    try {
+      const result = await this.#rootFactsService.generateFacts(className, tone);
+      this.#view.showFactSuccess(result.fact);
+      this.#view.showStatus(
+        `Fakta ${this.#view.getToneLabel(result.tone)} siap (${result.backend.toUpperCase()})`,
+      );
+    } catch (error) {
+      logError("Generasi fakta gagal", error);
+      this.#view.showFactError(error.message);
+      this.#view.showStatus("Fakta gagal dibuat");
+    }
+
+    if (
+      this.#queuedTone &&
+      this.#queuedTone !== tone &&
+      this.#lastDetection?.className
+    ) {
+      const nextTone = this.#queuedTone;
+      this.#queuedTone = null;
+      await this.#generateFacts(this.#lastDetection.className, nextTone);
+      return;
+    }
+
+    this.#queuedTone = null;
   }
 }
