@@ -27,7 +27,16 @@ module.exports = merge(common, {
       cleanupOutdatedCaches: true,
       maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
       navigateFallback: "/index.html",
-      globPatterns: ["**/*.{html,js,css,ico,png,json,bin}"],
+      additionalManifestEntries: [
+        { url: "/manifest.json", revision: null },
+        { url: "/favicon.ico", revision: null },
+        { url: "/icons/apple-touch-icon.png", revision: null },
+        { url: "/icons/icon-192x192.png", revision: null },
+        { url: "/icons/icon-512x512.png", revision: null },
+        { url: "/model/metadata.json", revision: null },
+        { url: "/model/model.json", revision: null },
+        { url: "/model/weights.bin", revision: null },
+      ],
       runtimeCaching: [
         {
           urlPattern: /^https:\/\/fonts\.(?:googleapis|gstatic)\.com/i,
