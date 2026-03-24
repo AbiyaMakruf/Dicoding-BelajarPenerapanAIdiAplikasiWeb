@@ -93,8 +93,10 @@ export default class HomePage {
 
   showModelReady(detectionBackend, factsBackend) {
     this.hideCameraLoading();
+    detectionBackend = detectionBackend.toUpperCase();
+    factsBackend = factsBackend.toUpperCase();
     this.showStatus(
-      `Model siap, model deteksi menggunakan ${detectionBackend.toUpperCase()}${factsBackend ? ` dan model facts menggunakan ${factsBackend.toUpperCase()}` : ""}.`,
+      `Model siap. Using ${detectionBackend} and ${factsBackend}.`,
     );
   }
 

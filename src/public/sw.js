@@ -1,22 +1,24 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox-sw.js");
 
 if (workbox) {
+  const CACHE_REVISION = "1.0.1";
+
   self.skipWaiting();
   workbox.core.clientsClaim();
 
   workbox.precaching.precacheAndRoute([
-    { url: "/", revision: "1.0.0" },
-    { url: "/index.html", revision: "1.0.0" },
-    { url: "/app.bundle.js", revision: "1.0.0" },
-    { url: "/app.css", revision: "1.0.0" },
-    { url: "/manifest.json", revision: "1.0.0" },
-    { url: "/favicon.ico", revision: "1.0.0" },
-    { url: "/icons/apple-touch-icon.png", revision: "1.0.0" },
-    { url: "/icons/icon-192x192.png", revision: "1.0.0" },
-    { url: "/icons/icon-512x512.png", revision: "1.0.0" },
-    { url: "/model/model.json", revision: "1.0.0" },
-    { url: "/model/metadata.json", revision: "1.0.0" },
-    { url: "/model/weights.bin", revision: "1.0.0" }
+    { url: "/", revision: CACHE_REVISION },
+    { url: "/index.html", revision: CACHE_REVISION },
+    { url: "/app.bundle.js", revision: CACHE_REVISION },
+    { url: "/app.css", revision: CACHE_REVISION },
+    { url: "/manifest.json", revision: CACHE_REVISION },
+    { url: "/favicon.ico", revision: CACHE_REVISION },
+    { url: "/icons/apple-touch-icon.png", revision: CACHE_REVISION },
+    { url: "/icons/icon-192x192.png", revision: CACHE_REVISION },
+    { url: "/icons/icon-512x512.png", revision: CACHE_REVISION },
+    { url: "/model/model.json", revision: CACHE_REVISION },
+    { url: "/model/metadata.json", revision: CACHE_REVISION },
+    { url: "/model/weights.bin", revision: CACHE_REVISION }
   ]);
 
   workbox.routing.registerRoute(
