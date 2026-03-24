@@ -41,7 +41,23 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "src/index.html"),
       scriptLoading: "module",
-    })
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, "src/public/favicon.ico"),
+          to: ".",
+        },
+        {
+          from: path.resolve(__dirname, "src/public/icons"),
+          to: "icons",
+        },
+        {
+          from: path.resolve(__dirname, "src/model"),
+          to: "model",
+        },
+      ],
+    }),
   ],
   stats: {
     warningsFilter: /import\.meta/,
