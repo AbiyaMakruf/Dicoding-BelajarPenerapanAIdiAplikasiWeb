@@ -1,1 +1,1 @@
-APP_URL=PASTE_YOUR_NETLIFY_URL_HERE
+APP_URL=https://candid-kataifi-6e1910.netlify.app/

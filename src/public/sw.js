@@ -1,7 +1,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/7.0.0/workbox-sw.js");
 
 if (workbox) {
-  const CACHE_REVISION = "1.0.1";
+  const CACHE_REVISION = "1.0.2";
 
   self.skipWaiting();
   workbox.core.clientsClaim();
@@ -16,6 +16,8 @@ if (workbox) {
     { url: "/icons/apple-touch-icon.png", revision: CACHE_REVISION },
     { url: "/icons/icon-192x192.png", revision: CACHE_REVISION },
     { url: "/icons/icon-512x512.png", revision: CACHE_REVISION },
+    { url: "/screenshots/screenshot1.png", revision: CACHE_REVISION },
+    { url: "/screenshots/screenshot2.png", revision: CACHE_REVISION },
     { url: "/model/model.json", revision: CACHE_REVISION },
     { url: "/model/metadata.json", revision: CACHE_REVISION },
     { url: "/model/weights.bin", revision: CACHE_REVISION }
