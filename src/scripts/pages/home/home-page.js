@@ -91,12 +91,12 @@ export default class HomePage {
     }
   }
 
-  // showModelReady(detectionBackend, factsBackend) {
-  //   this.hideCameraLoading();
-  //   this.showStatus(
-  //     `Model siap`,
-  //   );
-  // }
+  showModelReady(detectionBackend, factsBackend) {
+    this.hideCameraLoading();
+    this.showStatus(
+      `Model siap, model deteksi menggunakan ${detectionBackend.toUpperCase()}${factsBackend ? ` dan model facts menggunakan ${factsBackend.toUpperCase()}` : ""}.`,
+    );
+  }
 
   showCameraLoading() {
     const toggleButton = document.getElementById("btn-toggle");
