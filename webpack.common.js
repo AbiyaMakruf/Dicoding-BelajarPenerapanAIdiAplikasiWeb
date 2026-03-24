@@ -61,6 +61,10 @@ module.exports = {
           to: "icons",
         },
         {
+          from: path.resolve(__dirname, "src/public/screenshots"),
+          to: "screenshots",
+        },
+        {
           from: path.resolve(__dirname, "src/model"),
           to: "model",
         },
